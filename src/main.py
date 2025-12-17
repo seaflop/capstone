@@ -4,6 +4,10 @@ import multiprocessing
 import threading
 from pynput import keyboard
 from pygame import mixer
+import os
+import logging
+logging.basicConfig(level=logging.INFO, format = " %(asctime)s - %(levelname)s - %(message)s")
+logging.disable(logging.CRITICAL)
 
 # CONSTANT FOR DETERMINING IF PROGRAM IS RUNNING ON A PI
 ON_PI = False
@@ -58,15 +62,18 @@ def get_voice_file_location():
 def on_press(key):
     global interrupt_signal, pause_signal
     try: 
-        print("key {0} was pressed".format(key.char))
+        logging.info("key {0} was pressed".format(key.char))
     except AttributeError:
-        print ("key {0} was pressed".format(key))
+        logging.info("key {0} was pressed".format(key))
         if (key == keyboard.Key.space and pause_signal == False):
             pause_signal = True
+            logging.info(f"Pause signal set to {pause_signal}")
         elif (key == keyboard.Key.space and pause_signal == True):
             pause_signal = False
+            logging.info(f"Pause signal set to {pause_signal}")
         elif (key == key.esc):
             interrupt_signal = True
+            logging.info(f"Interrupt signal set to {interrupt_signal}")
             #return False # Stops the keyboard listener
 
 """
@@ -74,44 +81,59 @@ def on_press(key):
 """
 def play_audio(file_location):
 
+    # Make sure that the passed file_location parameter is a valid file location
+    assert os.path.exists(file_location), "Error finding audio file"
+
     global interrupt_signal, pause_signal
 
     is_paused = False
 
+    # Start listening for keyboard events
     listener = keyboard.Listener(on_press=on_press)
     listener.start()
-    print("listener started")
+    logging.info("Started keyboard listener")
 
+    # Start playing audio
     mixer.music.load(file_location)
     mixer.music.play()
-    print("playing audio")
+    logging.info("Playing audio")
 
     while (True):
         # If stop signal received and running, stop it.
         if (interrupt_signal and mixer.music.get_busy()):
             break
+        # if stop signal received and paused, stop it.
+        elif (interrupt_signal and is_paused):
+            break
         # If paused signal received and running, pause it.
         elif (pause_signal and mixer.music.get_busy()):
             mixer.music.pause()
             is_paused = True
+            logging.info("Paused audio")
         # If unpause signal received and not running, but was paused previously, run it.
         elif (not pause_signal and not mixer.music.get_busy() and is_paused):
             mixer.music.unpause()
             is_paused = False
+            logging.info("Resumed audio")
         # If not running and was not paused previously, stop it.
         elif (not mixer.music.get_busy() and not is_paused):
             break
 
     listener.stop()
+    logging.info("Stopping keyboard listener")
     mixer.music.stop()
+    logging.info("Stopping audio playback")
     reset_signals()
-    print("stopping audio")
+    logging.info("Resetting all signals")
 
 def save_TTS_to_file(text):
+    logging.info("Text received")
     voice_engine.save_to_file(text, "test.wav")
     voice_engine.runAndWait()
+    logging.info("TTS saved")
 
 if __name__ == "__main__":
+    logging.info("Beginning of program")
     text = "Take me to the island. I want to go. I want to go."
     save_TTS_to_file(text)
     play_audio("test.wav")
