@@ -5,9 +5,10 @@ import threading
 from pynput import keyboard
 from pygame import mixer
 import os
+import time
 import logging
 logging.basicConfig(level=logging.INFO, format = " %(asctime)s - %(levelname)s - %(message)s")
-logging.disable(logging.CRITICAL)
+#logging.disable(logging.CRITICAL)
 
 # CONSTANT FOR DETERMINING IF PROGRAM IS RUNNING ON A PI
 ON_PI = False
@@ -82,7 +83,7 @@ def on_press(key):
 def play_audio(file_location):
 
     # Make sure that the passed file_location parameter is a valid file location
-    assert os.path.exists(file_location), "Error finding audio file"
+    assert os.path.isfile(file_location), "Error finding audio file"
 
     global interrupt_signal, pause_signal
 
@@ -127,9 +128,21 @@ def play_audio(file_location):
     logging.info("Resetting all signals")
 
 def save_TTS_to_file(text):
+
+    logging.info("Checking to make sure the file does not already exist")
+    if (os.path.isfile("test.wav")):
+        os.remove("test.wav")
+        logging.info("Removed already existing audio file")
+
     logging.info("Text received")
     voice_engine.save_to_file(text, "test.wav")
     voice_engine.runAndWait()
+
+    # A while loop that sleeps for 0.1 seconds to ensure that the file gets created before exiting the function
+    while (not os.path.isfile("test.wav")):
+        time.sleep(0.1)
+        logging.info("Slept for 0.1 seconds while waiting for .wav creation")
+
     logging.info("TTS saved")
 
 if __name__ == "__main__":
