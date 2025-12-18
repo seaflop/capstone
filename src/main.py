@@ -232,6 +232,7 @@ def TTS_to_file(text: str):
     # Make sure that the function call passed a string as the text parameter
     assert isinstance(text, str), "Text passed must be a string."
 
+    logging.info("Checking to make sure the file does not already exist")
     shift_files("tts.wav", directory=tts_dir, max_num_of_files=5)
 
     """
