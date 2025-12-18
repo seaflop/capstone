@@ -19,7 +19,7 @@ button = 0
 potentiometer = 0
 
 # All file locations
-tts_dir = "./tts_output"
+tts_dir = "./tts"
 tts_file = "tts1.wav"
 tts_path = os.path.join(tts_dir, tts_file)
 base_tts_file = "tts.wav"
@@ -121,11 +121,13 @@ def shift_files(base_name: str, directory = ".", max_num_of_files = 1):
     file_new_path = os.path.join(directory, file_new)
     # Shift remaining files
     for i in range(max_num_of_files, 1, -1):
-        logging.info(i)
         file_current = f"{parts[0]}{i - 1}{parts[1]}{parts[2]}"
         file_current_path = os.path.join(directory, file_current)
         if(os.path.isfile(file_current_path)):
             os.rename(file_current_path, file_new_path)
+            logging.info(f"Shifted up {file_current_path} to {file_new_path}")
+        else:
+            logging.info(f"{file_current_path} does not exist")
         file_new = file_current
         file_new_path = os.path.join(directory, file_new)
     
@@ -230,10 +232,14 @@ def TTS_to_file(text: str):
     # Make sure that the function call passed a string as the text parameter
     assert isinstance(text, str), "Text passed must be a string."
 
+    shift_files("tts.wav", directory=tts_dir, max_num_of_files=5)
+
+    """
     logging.info("Checking to make sure the file does not already exist")
     if (os.path.isfile(tts_path)):
         os.remove(tts_path)
         logging.info("Removed already existing audio file")
+    """
 
     logging.info("Text received")
     voice_engine.save_to_file(text, tts_path)
@@ -245,11 +251,10 @@ def TTS_to_file(text: str):
         time.sleep(0.1)
         logging.info("Slept for 0.1 seconds while waiting for .wav file creation")
 
-    logging.info("TTS saved")
+    logging.info(f"TTS saved to {tts_path}")
 
 if __name__ == "__main__":
     logging.info("Beginning of program")
     text = "I want to go to the island. Why won't you let me go? Let me go."
     TTS_to_file(text)
     play_audio(tts_path)
-    shift_files("tts.wav", directory=tts_dir, max_num_of_files=3)
