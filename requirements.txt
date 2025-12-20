@@ -1,6 +1,7 @@
-pytesseract
 numpy
 pyttsx3
 opencv-python
 pynput
 pygame
+paddleocr
+paddlepaddle

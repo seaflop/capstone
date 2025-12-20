@@ -8,15 +8,7 @@ os.environ["DISABLE_MODEL_SOURCE_CHECK"] = "True"
 from paddleocr import PaddleOCR
 #paddle.set_num_threads(2)
 
-image_dir = "./images"
-image_file = "example2.jpg"
-image_path = os.path.join(image_dir, image_file)
-base_image_file = "image.jpg"
-
-ocr_dir = "./ocr"
-ocr_file = "ocr1.txt"
-ocr_path = os.path.join(ocr_dir, ocr_file)
-base_ocr_path = "ocr.txt"
+import file_management as fm
 
 scaled_height = 1080
 
@@ -47,9 +39,8 @@ def ocr(image_path):
     result = ocr.predict(image_path)
     extracted_text = result[0]["rec_texts"]
 
-    with open(ocr_path, "w") as f:
+    fm.shift_files(fm.base_ocr_file, directory=fm.ocr_dir, max_num_of_files=5)
+
+    with open(fm.ocr_path, "w") as f:
         for text in extracted_text:
             f.write(text + " ")
-
-resize_image(image_path)
-ocr(image_path)

@@ -2,3 +2,5 @@
 *.wav
 /images
 /tts
+/ocr
+PaddleOCR/
