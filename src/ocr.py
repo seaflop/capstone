@@ -5,6 +5,10 @@ logging.basicConfig(level=logging.INFO, format = " %(asctime)s - %(levelname)s -
 logging.disable(logging.CRITICAL) # COMMENT OUT THIS LINE TO ENABLE LOGGING MESSAGES
 
 os.environ["DISABLE_MODEL_SOURCE_CHECK"] = "true"
+os.environ["FLAGS_enable_pir_api"] = "0"
+os.environ["FLAGS_use_pir_api"] = "0"
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
 from paddleocr import PaddleOCR
 from file_management import FileManager
 

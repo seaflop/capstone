@@ -17,7 +17,10 @@ from threading import Thread
 from gpiozero import Button
 from picamera2 import Picamera2
 
-camera = Picamera2
+camera = Picamera2()
+camera_config = camera.create_still_configuration(main={"size": (1920, 1080)})
+camera.configure(camera_config)
+camera.start()
 
 BUTTON_PIN = 14
 BUTTON_HOLD_TIME = 3
