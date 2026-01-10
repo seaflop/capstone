@@ -35,10 +35,11 @@ def on_press(key):
         if (key == keyboard.Key.space):
             if (not started):
                 started = True
-            if (c.is_paused and not c.is_stopped):
-                c.resume(resume_sound_file_location=fl.resume_sound_path)
-            elif (not c.is_paused and not c.is_stopped):
-                c.pause(pause_sound_file_location=fl.pause_sound_path)
+            else:
+                if (c.is_paused and not c.is_stopped):
+                    c.resume(resume_sound_file_location=fl.resume_sound_path)
+                elif (not c.is_paused and not c.is_stopped):
+                    c.pause(pause_sound_file_location=fl.pause_sound_path)
         elif (key == keyboard.Key.esc):
             stop_flag = True
             started = False
@@ -49,7 +50,7 @@ def on_press(key):
         pass
 
 def main():
-    global c, stop_flag, image_path
+    global c, stop_flag, image_path, started
 
     if (stop_flag):
         return
@@ -60,8 +61,6 @@ def main():
     print("(Note that it may take some time to terminate the program as it finishes whatever operation is was currently doing)")
     print("Waiting for input...")
 
-    global started
-    started = False
     while (not started):
         if (stop_flag):
             return
@@ -107,6 +106,7 @@ if __name__ == "__main__":
     listener.start()
 
     stop_flag = False
+    started = False
 
     c = Capstone(path_to_voice=fl.voice_path)
 

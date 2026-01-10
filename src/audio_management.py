@@ -39,7 +39,9 @@ class AudioManager():
         # sure that we don't exit the loop while it's paused.
         while (mixer.music.get_busy() or (not mixer.music.get_busy() and self._is_paused)):
             time.sleep(0.1)
-    
+        
+        self.stop()
+        
     def pause(self, pause_sound_file_location: str | None = None):
         if mixer.music.get_busy():
             mixer.music.pause()
@@ -65,7 +67,6 @@ class AudioManager():
         return
     
     def stop(self, stop_sound_file_location: str | None = None):
-        self._is_stopped = True
         mixer.music.stop()
         mixer.music.unload()
         self._is_paused = False
