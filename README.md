@@ -19,10 +19,12 @@ A RaspberryPi-specific script is coming soon!
 
 **NOTE:** *Since this project uses the pynput package for monitoring keyboard events, this script will not work on Linux DEs using the Wayland Protocol.*
 
-#### Download/Clone the repository.
+Run the following commands in a terminal.
+
+#### Download/Clone the repository in any directory you'd like.
 
 ```
-$ git clone https://github.com/seaflop/capstone
+git clone https://github.com/seaflop/capstone
 ```
 
 #### Navigate to the `capstone` directory.
@@ -36,21 +38,21 @@ cd capstone
 Linux:
 
 ```
-$ python3 -m venv .venv
-$ source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 Windows:
 
 ```
-$ python -m venv .venv
-$ .venv\Scripts\Activate
+python -m venv .venv
+.venv\Scripts\Activate
 ```
 
 #### Download the required packages.
 
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 #### Run the Script
@@ -58,7 +60,7 @@ $ pip install -r requirements.txt
 Run the script from the `capstone` directory.
 
 ```
-$ python ./src/main.py -i "path/to/your/image/here.jpg"
+python ./src/main.py -i "path/to/your/image/here.jpg"
 ```
 
 The script will play a "ding" noise when it is ready to run. This may take some time, especially on the first run as all the models will have to be downloaded first.
