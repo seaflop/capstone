@@ -4,3 +4,5 @@ pygame
 paddleocr
 paddlepaddle
 piper-tts
+gpiozero
+picamera2

@@ -9,35 +9,55 @@ import file_locations as fl
 if (sys.argv[0] != fl.realmain_script_path):
     raise RuntimeError(f"Script must be run from {fl.main_script_path}. Got {sys.argv[0]}")
     
-import argparse
-# Define CLI arguments
-parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--image", help="relative path of image file location",
-                    default= fl.image_path)
-args = parser.parse_args()
-
-image_path = args.image
-
 from capstone import Capstone
 
 import time
 import os
 from threading import Thread
+from gpiozero import Button
+from picamera2 import Picamera2
 
-def input_handler():
-    global c
+camera = Picamera2
+
+BUTTON_PIN = 14
+BUTTON_HOLD_TIME = 3
+
+def button_hold_handler():
+    global stop_flag
+    if (started):
+        stop_flag = True
+
+def button_press_handler():
+    global c, started
+    if (not started):
+        started = True
+        main()
+    else:
+        if (c.is_paused and not c.is_stopped):
+            c.resume(resume_sound_file_location=fl.resume_sound_path)
+        elif (not c.is_paused and not c.is_stopped):
+            c.pause(pause_sound_file_location=fl.pause_sound_path)
+    return
+
+def take_picture():
+    global camera
+    camera.capture_file(fl.image_path)
     return
 
 def do_ocr():
-    global c, stop_flag, image_path
+    global c, stop_flag
 
     if (stop_flag):
         return
-    c.resize_image(image_path)
+    take_picture()
 
     if (stop_flag):
         return
-    c.ocr(image_path, fl.ocr_path)
+    c.resize_image(fl.image_path)
+
+    if (stop_flag):
+        return
+    c.ocr(fl.image_path, fl.ocr_path)
     
     if (stop_flag):
         return
@@ -51,24 +71,13 @@ def do_ocr():
     return
 
 def main():
-    global c, stop_flag, image_path
+    global c, stop_flag, started
 
-    print("Press the button to start the script.")
-    print("While the script is running press the button to pause/resume and hold down the button to exit.")
-    print("(Note that it may take some time to terminate the program as it finishes whatever operation is was currently doing)")
-    print("Waiting for input...")
-
-    global started
-    started = False
-    """while (not started):
-        if (stop_flag):
-            return
-        time.sleep(0.1)"""
-    
     if (stop_flag):
         return
     c.create_path(os.path.basename(os.path.dirname(fl.ocr_path)), 
-                  os.path.basename(os.path.dirname(fl.tts_path)))
+                  os.path.basename(os.path.dirname(fl.tts_path)),
+                  os.path.basename(os.path.dirname(fl.image_path)))
 
     if (stop_flag):
         return
@@ -82,15 +91,22 @@ def main():
         return
     c.play(fl.tts_path)
 
-    started = False
-
 if __name__ == "__main__":
 
     program_running = True
 
     stop_flag = False
+    started = False
 
     c = Capstone(path_to_voice=fl.voice_path)
     c.play(fl.ready_sound_path)
 
+    print("Press the button to start the script.")
+    print("While the script is running press the button to pause/resume and hold down the button to exit.")
+    print("(Note that it may take some time to terminate the program as it finishes whatever operation is was currently doing)")
+    print("Waiting for input...")
+
     main()
+
+    stop_flag = False
+    started = False

@@ -70,3 +70,21 @@ Press Space to start the script.
 You can exit the script at any time by pressing the Esc key.
 
 Audio playback can be paused/resumed by pressing the spacebar.
+
+### Setup for Raspberry Pi
+
+Required Hardware:
+
+- Raspberry Pi 4
+- Raspberry Pi Camera 3
+- Button connected to GPIO 
+
+#### Activate a Python virtual environment
+
+Make sure to include system-wide packages.
+
+```
+python3 -m venv .venv --system-site-packages
+source .venv/bin/activate
+
+```
