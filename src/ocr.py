@@ -32,7 +32,7 @@ class OCR(FileManager):
         ocr = PaddleOCR(
             lang='en',
             use_doc_orientation_classify=True,
-            use_doc_unwarping=True
+            use_doc_unwarping=True,
         )
 
         result = ocr.predict(image_file_location)

@@ -90,6 +90,22 @@ Required Hardware:
 - Raspberry Pi Camera 3
 - Button connected to GPIO 
 
+#### Install Paddle (instructions from Q-Engineering Website)
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+install dependencies
+sudo apt-get install cmake wget
+sudo apt-get install libatlas-base-dev libopenblas-dev libblas-dev
+sudo apt-get install liblapack-dev patchelf gfortran
+sudo -H pip3 install Cython
+pip3 install six requests wheel pyyaml
+wget https://github.com/Qengineering/Paddle-Raspberry-Pi/raw/main/paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
+sudo -H pip3 install paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
+rm paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
+```
+
 #### Download Python 3.10.0
 
 This script specifically requires Python version 3.10.0 to work properly.
@@ -118,10 +134,9 @@ cd capstone
 Make sure to include system-wide packages.
 
 ```
-pyenv shell 3.10.0
+pyenv local 3.10.0
 python3 -m venv .venv --system-site-packages
 source .venv/bin/activate
-
 ```
 
 #### Download the required packages.
@@ -136,5 +151,5 @@ pip install -r requirements.txt
 Run the script from the `capstone` directory,
 
 ```
-python ./src/main.py
+python ./src/realmain.py
 ```
