@@ -53,6 +53,8 @@ Download the required packages.
 $ pip install -r requirements.txt
 ```
 
+#### Run the Script
+
 Run the script from the `capstone` directory.
 
 ```
