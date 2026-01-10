@@ -19,19 +19,19 @@ A RaspberryPi-specific script is coming soon!
 
 **NOTE:** *Since this project uses the pynput package for monitoring keyboard events, this script will not work on Linux DEs using the Wayland Protocol.*
 
-Download/Clone the repository.
+#### Download/Clone the repository.
 
 ```
 $ git clone github.com/seaflop/capstone
 ```
 
-Navigate to the `capstone` directory.
+#### Navigate to the `capstone` directory.
 
 ```
 cd capstone
 ```
 
-Activate a Python virtual environment.
+#### Activate a Python virtual environment.
 
 Linux:
 
@@ -47,7 +47,7 @@ $ python -m venv .venv
 $ .venv\Scripts\Activate
 ```
 
-Download the required packages.
+#### Download the required packages.
 
 ```
 $ pip install -r requirements.txt
