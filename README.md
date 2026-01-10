@@ -60,7 +60,7 @@ pip install -r requirements.txt
 Run the script from the `capstone` directory, and provide the path to the image you'd like to test on.
 
 ```
-python ./src/main.py -i "path/to/your/image/here.jpg"
+python ./src/main.py -i "pathtoyourimagehere.jpg"
 ```
 
 The script will play a "ding" noise when it is ready to run. This may take some time, especially on the first run as all the models will have to be downloaded first.
