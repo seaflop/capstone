@@ -15,7 +15,7 @@ A RaspberryPi-specific script is coming soon!
 
 *Ensure that you have Python version 3.10 or later installed on your system.*
 
-*PaddleOCR is known to have issues with MacOS running on M-series chips. You can attempt to follow the instructions below for the Linux installation, but it is not guaranteed to work*
+*PaddleOCR is known to have issues with MacOS running on M-series chips. You can attempt to follow the instructions below for the Linux installation, but it is not guaranteed to work.*
 
 **NOTE:** *Since this project uses the pynput package for monitoring keyboard events, this script will not work on Linux DEs using the Wayland Protocol.*
 
@@ -59,4 +59,10 @@ Run the script from the `capstone` directory.
 $ python ./src/main.py -i "path/to/your/image/here.jpg"
 ```
 
-## To-do
+The script will play a "ding" noise when it is ready to run. This may take some time, especially on the first run as all the models will have to be downloaded first.
+
+Press Space to start the script.
+
+You can exit the script at any time by pressing the Esc key.
+
+Audio playback can be paused/resumed by pressing the spacebar.
