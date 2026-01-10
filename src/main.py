@@ -1,10 +1,27 @@
+import sys
+# Assert Python version >= 3.10
+MIN_VERSION = (3, 10)
+if sys.version_info < MIN_VERSION:
+    raise EnvironmentError(f"This script requires Python version {MIN_VERSION[0]}.{MIN_VERSION[1]} or higher.\nYou are using Python version {sys.version_info.major}.{sys.version_info.minor}")
+
 import file_locations as fl
+# Ensure the proper starting directory (i.e. not from src/ and instead from the project root directory)
+if (sys.argv[0] != fl.main_script_path):
+    raise RuntimeError(f"Script must be run from {fl.main_script_path}. Got {sys.argv[0]}")
+    
+import argparse
+# Define CLI arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("-i", "--image", help="relative path of image file location",
+                    default= fl.image_path)
+args = parser.parse_args()
+
+image_path = args.image
+
 from capstone import Capstone
 
 from pynput import keyboard
 import time
-import argparse
-import sys
 import os
 
 """
@@ -84,23 +101,6 @@ def main():
     started = False
 
 if __name__ == "__main__":
-
-    # Assert Python version >= 3.10
-    MIN_VERSION = (3, 10)
-    if sys.version_info < MIN_VERSION:
-        raise EnvironmentError(f"This script requires Python version {MIN_VERSION[0]}.{MIN_VERSION[1]} or higher.\nYou are using Python version {sys.version_info.major}.{sys.version_info.minor}")
-
-    # Ensure the proper starting directory (i.e. not from src/ and instead from the project root directory)
-    if (sys.argv[0] != fl.main_script_path):
-        raise RuntimeError(f"Script must be run from {fl.main_script_path}. Got {sys.argv[0]}")
-        
-    # Define CLI arguments
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--image", help="relative path of image file location",
-                        default= fl.image_path)
-    args = parser.parse_args()
-
-    image_path = args.image
 
     program_running = True
     listener = keyboard.Listener(on_press=on_press)
