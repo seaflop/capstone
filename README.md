@@ -9,9 +9,7 @@ There is a `main.py` script that can be run on Windows/Linux machines to test th
 
 A RaspberryPi-specific script is coming soon!
 
-## Setup
-
-### Setup for Linux/Windows
+## Setup for Linux/Windows
 
 *Ensure that you have Python version 3.10.0 or later installed on your system.*
 
@@ -84,7 +82,7 @@ You can exit the script at any time by pressing the Esc key.
 
 Audio playback can be paused/resumed by pressing the spacebar.
 
-### Setup for Raspberry Pi
+## Setup for Raspberry Pi
 
 Required Hardware:
 
