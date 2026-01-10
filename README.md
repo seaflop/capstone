@@ -22,7 +22,7 @@ A RaspberryPi-specific script is coming soon!
 #### Download/Clone the repository.
 
 ```
-$ git clone github.com/seaflop/capstone
+$ git clone https://github.com/seaflop/capstone
 ```
 
 #### Navigate to the `capstone` directory.
