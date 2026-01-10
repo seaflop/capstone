@@ -27,6 +27,10 @@ $ git clone github.com/seaflop/capstone
 
 Navigate to the `capstone` directory.
 
+```
+cd capstone
+```
+
 Activate a Python virtual environment.
 
 Linux:
