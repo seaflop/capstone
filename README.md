@@ -141,12 +141,10 @@ source .venv/bin/activate
 #### Download the required packages.
 
 ```
-pip install --upgrade pip
-pip install -r requirements.txt
-pip uninstall paddlepaddle paddleocr
 wget https://github.com/Qengineering/Paddle-Raspberry-Pi/raw/main/paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
 pip install paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
-pip install paddleocr
+pip install --upgrade pip
+pip install -r requirements.txt
 rm paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
 ```
 
