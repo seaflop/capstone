@@ -95,6 +95,8 @@ This project is deployed on a system with the following specifications:
 
 After downloading the OS, install the following dependencies:
 
+[Very useful guide btw](https://qengineering.eu/install-paddlepaddle-on-raspberry-pi-4.html)
+
 ```
 sudo apt install libcap-dev libatlas-base-dev ffmpeg libopenjp2-7
 sudo apt install libcamera-dev
