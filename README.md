@@ -84,26 +84,38 @@ Audio playback can be paused/resumed by pressing the spacebar.
 
 ## Setup for Raspberry Pi
 
-Required Hardware:
+This project is deployed on a system with the following specifications:
 
-- Raspberry Pi 4
-- Raspberry Pi Camera 3
-- Button connected to GPIO 
+- Raspberry Pi CM4 connected to a Waveshare Nano Base Board (A)
+- Raspberry Pi OS Full 64-bit
+- Raspberry Pi Camera Module 3
+- Button connected to GPIO 17
 
-#### Install dependencies
+#### Setup Raspberry Pi
 
-Follow [Q-Engineering's steps](https://qengineering.eu/install-paddlepaddle-on-raspberry-pi-4.html) to install Paddle via pip3, PaddleHub, and Paddle Lite. Alternatively (and this is much easier), you can [download an OS from Q-Engineering](https://github.com/Qengineering/RPi-Bullseye-DNN-image) preloaded with all the necessary frameworks.
-
-#### Download Python 3.10.0
-
-This script specifically requires Python version 3.10.0 to work properly.
+After downloading the OS, install the following dependencies:
 
 ```
-sudo apt install pyenv
-pyenv install 3.10.0
+sudo apt install libcap-dev libatlas-base-dev ffmpeg libopenjp2-7
+sudo apt install libcamera-dev
+sudo apt install libkms++-dev libfmt-dev libdrm-dev
 ```
 
-Run `pyenv init` and follow the instructions.
+Add the following line under \[all\] in /boot/firmware/config.txt to enable the camera
+
+```
+dtoverlay=imx708
+```
+
+Reboot to apply all changes
+
+```
+sudo reboot
+```
+
+#### Download Python 3.10.19
+
+This script specifically requires Python version 3.10.19 to work properly. You can follow the instructions to download it [here](https://realpython.com/installing-python/#linux-how-to-build-python-from-source-code)
 
 #### Download/Clone the repository in any directory you'd like.
 
@@ -122,8 +134,7 @@ cd capstone
 Make sure to include system-wide packages.
 
 ```
-pyenv local 3.10.0
-python3 -m venv .venv --system-site-packages
+python3.10 -m venv .venv --system-site-packages
 source .venv/bin/activate
 ```
 
@@ -132,6 +143,11 @@ source .venv/bin/activate
 ```
 pip install --upgrade pip
 pip install -r requirements.txt
+pip uninstall paddlepaddle paddleocr
+wget https://github.com/Qengineering/Paddle-Raspberry-Pi/raw/main/paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
+pip install paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
+pip install paddleocr
+rm paddlepaddle-2.4.2-cp39-cp39-linux_aarch64.whl
 ```
 
 #### Run the script

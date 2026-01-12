@@ -7,3 +7,5 @@ piper-tts
 gpiozero
 picamera2
 paddlex[ocr-core]
+rpi-libcamera
+rpi-kms
