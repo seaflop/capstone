@@ -1,18 +1,11 @@
 import cv2
 import os
 import logging
+from rapidocr import RapidOCR 
 logging.basicConfig(level=logging.INFO, format = " %(asctime)s - %(levelname)s - %(message)s")
 logging.disable(logging.CRITICAL) # COMMENT OUT THIS LINE TO ENABLE LOGGING MESSAGES
 
-os.environ["DISABLE_MODEL_SOURCE_CHECK"] = "true"
-os.environ["FLAGS_enable_pir_api"] = "0"
-os.environ["FLAGS_use_pir_api"] = "0"
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-from paddleocr import PaddleOCR
-from file_management import FileManager
-
-class OCR(FileManager):
+class OCR():
     def __init__(self, scaled_image_height = 1080):
         self._scaled_image_height = scaled_image_height
 
@@ -27,26 +20,17 @@ class OCR(FileManager):
         assert isinstance(scaled_image_height, int), "scaled_image_height must be an integer"
 
         self._scaled_image_height = scaled_image_height
-
+    
     def ocr(self, image_file_location: str, text_file_location: str):
-        ocr = PaddleOCR(
-            lang='en',
-            use_doc_orientation_classify=True,
-            use_doc_unwarping=True,
-        )
+        engine = RapidOCR()
 
-        result = ocr.predict(image_file_location)
-
-        extracted_text = result[0]["rec_texts"]
-
-        self.make_space_for_file(text_file_location, 3)
+        result = engine(image_file_location)
+        extracted_text = result.txts
 
         with open(text_file_location, "w") as f:
             for text in extracted_text:
                 f.write(text + " ")
 
-        return
-    
     def resize_image(self, image_location: str):
         img = cv2.imread(image_location)
         height = img.shape[0]
@@ -67,7 +51,7 @@ class OCR(FileManager):
 if __name__ == "__main__":
     o = OCR()
     print("instantiated")
-    o.resize_image("./images/example1.jpg")
+    o.resize_image("./images/example2.jpg")
     print("resized")
-    o.ocr("./images/example1.jpg", "./ocr/ocr1.txt")
+    o.ocr("./images/example2.jpg", "./ocr/ocr1.txt")
     print("done")
