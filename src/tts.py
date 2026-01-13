@@ -5,11 +5,10 @@ import os
 from threading import Thread
 from pynput import keyboard
 from audio_management import AudioManager
-from file_management import FileManager
 import error_checker as e
 
 # Inherits from the AudioManager and FileManager classes.
-class TTS(AudioManager, FileManager):
+class TTS(AudioManager):
     def __init__(self, path_to_voice: str, speed = float(5.0), volume = float(1.0), **kwargs):
 
         # Make sure that path_to_voice is a string
@@ -64,22 +63,6 @@ class TTS(AudioManager, FileManager):
         self.configure_voice()
         
     def make_TTS_file(self, text: str, audio_file_location: str):
-        # Make sure that text_file_location is a string
-        #assert isinstance(text_file_location, str), "text_file_location must be a string!"
-
-        # Make sure that audio_file_location is a string
-        assert isinstance(audio_file_location, str), "audio_file_location must be a string!"
-
-        # Make sure that text_file_location exists
-        #assert os.path.isfile(text_file_location), "text_file_location cannot be found!"
-
-        # Make sure that text_file_location has a ".txt" format
-        #assert text_file_location.endswith(".txt"), "text_file_location must be a .txt file!"
-
-        # Make sure that audio_file_location has a ".wav format"
-        assert audio_file_location.endswith(".wav"), "audio_file_location must be a .wav file!"
-
-        self.make_space_for_file(audio_file_location, 3)
 
         with wave.open(audio_file_location, "wb") as wav_file:
             self._voice.synthesize_wav(text, wav_file)
