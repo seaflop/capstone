@@ -1,6 +1,7 @@
 from tts import TTS
 from ocr import OCR
 import cv2
+import file_locations as fl
 
 class Capstone(TTS, OCR):
     def __init__(self, **kwargs):
@@ -28,7 +29,8 @@ class Capstone(TTS, OCR):
 
             # If 's' is pressed, save the image
             if key & 0xFF == ord(" "):
-                image_name = image_location
+                self.play(fl.camera_sound_path)
+                image_name = image_file_location
                 cv2.imwrite(image_name, frame)
                 break
             
