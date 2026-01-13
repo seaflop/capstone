@@ -97,8 +97,9 @@ def main():
     if (stop_flag):
         return
     make_dirs(os.path.basename(os.path.dirname(fl.ocr_path)), 
-              os.path.basename(os.path.dirname(fl.tts_path)),
-              os.path.basename(os.path.dirname(fl.image_path)))
+              os.path.basename(os.path.dirname(fl.tts_path)))
+    if (args.webcam):
+        make_dirs(os.path.basename(os.path.dirname(fl.image_path)))
 
     if (stop_flag):
         return
