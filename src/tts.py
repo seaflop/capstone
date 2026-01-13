@@ -71,4 +71,3 @@ class TTS(AudioManager):
         while (not os.path.isfile(audio_file_location)):
             time.sleep(0.1)
         return
-    
