@@ -1,11 +1,6 @@
 opencv-python-headless
 pynput
 pygame
-paddleocr
-paddlepaddle
 piper-tts
-gpiozero
-picamera2
-paddlex[ocr-core]
-rpi-libcamera
-rpi-kms
+rapidocr
+onnxruntime
