@@ -8,7 +8,6 @@ class Capstone(TTS, OCR):
         super().__init__(**kwargs)
     
     def take_picture(self, image_file_location: str):
-        
         camera = cv2.VideoCapture(0)
         if (not camera.isOpened()):
             raise OSError("Error: Could not open the webcam")
