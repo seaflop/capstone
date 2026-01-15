@@ -77,10 +77,6 @@ def do_ocr():
 def main():
     global c, stop_flag, started
 
-    if (stop_flag):
-        return
-    c.play(fl.ready_sound_path)
-
     print("Press SPACE to start the script.")
     if(args.webcam):
         print("After starting the script, a preview of your webcam will pop up.")
@@ -118,6 +114,10 @@ def main():
     while (t.is_alive()):
         c.play(fl.idling_sound_path)
         time.sleep(1)
+
+    if (stop_flag):
+        return
+    c.play(fl.ready_sound_path)
 
     if (stop_flag):
         return

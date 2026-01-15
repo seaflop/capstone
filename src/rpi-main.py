@@ -42,10 +42,6 @@ def do_ocr():
 def main():
     global c, stop_flag, started
 
-    if (stop_flag):
-        return
-    c.play(fl.ready_sound_path)
-
     """
     while (not started):
         if (stop_flag):
@@ -69,8 +65,7 @@ def main():
 
     if (stop_flag):
         return
-    with open(fl.ocr_path, "r") as f:
-        print(f.read())
+    c.play(fl.ready_sound_path)
 
     if (stop_flag):
         return
