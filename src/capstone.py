@@ -21,7 +21,7 @@ class Capstone(TTS, OCR):
                 break
 
             # Display the resulting frame
-            cv2.imshow('Webcam Feed - Press s to Save, q to Quit', frame)
+            cv2.imshow('Webcam Feed - Press Space to Save, Esc to Quit', frame)
 
             # Wait for a key press
             key = cv2.waitKey(1) & 0xFF
