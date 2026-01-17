@@ -2,12 +2,15 @@ import cv2
 import os
 import logging
 from rapidocr import RapidOCR 
+import layoutparser as lp
 logging.basicConfig(level=logging.INFO, format = " %(asctime)s - %(levelname)s - %(message)s")
 logging.disable(logging.CRITICAL) # COMMENT OUT THIS LINE TO ENABLE LOGGING MESSAGES
 
 class OCR():
     def __init__(self, scaled_image_height = 1080):
         self._scaled_image_height = scaled_image_height
+        self._ocr_engine = RapidOCR()
+        self._layout_parser = lp.AutoLayoutModel('lp://EfficientDete/PubLayNet')
 
     # Getter and setter methods for scaled_image_height
     @property
@@ -22,9 +25,8 @@ class OCR():
         self._scaled_image_height = scaled_image_height
     
     def ocr(self, image_file_location: str, text_file_location: str):
-        engine = RapidOCR()
 
-        result = engine(image_file_location)
+        result = self._ocr_engine(image_file_location)
         extracted_text = result.txts
 
         with open(text_file_location, "w") as f:

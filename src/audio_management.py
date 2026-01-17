@@ -4,12 +4,13 @@ from pygame import mixer
 import time
 
 class AudioManager():
-    def __init__(self, **kwargs):
+    def __init__(self, is_stoppable = True,**kwargs):
         super().__init__(**kwargs)
 
         mixer.init()
         mixer.set_num_channels(2)
         self._system_channel = mixer.Channel(1)
+        self._is_stoppable = is_stoppable
         self._is_paused = False
         self._is_stopped = True
 
@@ -43,27 +44,29 @@ class AudioManager():
         self.stop()
         
     def pause(self, pause_sound_file_location: str | None = None):
-        if mixer.music.get_busy():
-            mixer.music.pause()
-            self._is_paused = True
-        if (not pause_sound_file_location is None):
-            pause_sound = mixer.Sound(pause_sound_file_location)
-            self._system_channel.play(pause_sound)
-            while mixer.get_busy():
-                time.sleep(0.01)
-            self._system_channel.stop()
-        return
-    
-    def resume(self, resume_sound_file_location: str | None = None):
-        if not mixer.music.get_busy():
-            if (not resume_sound_file_location is None):
-                resume_sound = mixer.Sound(resume_sound_file_location)
-                self._system_channel.play(resume_sound)
+        if (self._is_stoppable):
+            if mixer.music.get_busy():
+                mixer.music.pause()
+                self._is_paused = True
+            if (not pause_sound_file_location is None):
+                pause_sound = mixer.Sound(pause_sound_file_location)
+                self._system_channel.play(pause_sound)
                 while mixer.get_busy():
                     time.sleep(0.01)
                 self._system_channel.stop()
-            mixer.music.unpause()
-            self._is_paused = False
+        return
+    
+    def resume(self, resume_sound_file_location: str | None = None):
+        if (self._is_stoppable):
+            if not mixer.music.get_busy():
+                if (not resume_sound_file_location is None):
+                    resume_sound = mixer.Sound(resume_sound_file_location)
+                    self._system_channel.play(resume_sound)
+                    while mixer.get_busy():
+                        time.sleep(0.01)
+                    self._system_channel.stop()
+                mixer.music.unpause()
+                self._is_paused = False
         return
     
     def stop(self, stop_sound_file_location: str | None = None):
@@ -96,3 +99,12 @@ class AudioManager():
     @is_stopped.setter
     def is_stopped(self, is_stopped: bool):
         self._is_stopped = is_stopped
+
+    # Getter and setter methods for is_stoppable
+    @property
+    def is_stoppable(self) -> bool:
+        return self._is_stoppable
+    
+    @is_stoppable.setter
+    def is_stoppable(self, is_stoppable: bool):
+        self._is_stoppable = is_stoppable

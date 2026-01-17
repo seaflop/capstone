@@ -4,3 +4,4 @@ pygame
 piper-tts
 rapidocr
 onnxruntime
+layoutparser
