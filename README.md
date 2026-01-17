@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 **5. Run the Script**
 
-Run the script from the `capstone` directory.
+Run the script from the `assistive-reader` directory.
 
 **Flags:**  
 - `-w`: Use the webcam to take a picture.  
