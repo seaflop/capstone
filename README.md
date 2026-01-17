@@ -37,7 +37,7 @@ python -m venv .venv
 **4. Download the required packages.**
 
 ```
-pip insatll --upgrade pip
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
