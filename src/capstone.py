@@ -40,7 +40,3 @@ class Capstone(TTS, OCR):
         # When everything is done, release the capture and destroy windows
         camera.release()
         cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    c = Capstone(path_to_voice = fl.voice_path)
-    c.make_TTS_file("Error: No text detected.", "./sound_effects/no_text_found.wav")
