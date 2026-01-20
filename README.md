@@ -9,9 +9,16 @@ This project is still in progress, so check back every once in a while for updat
 
 *Expected completion: April 2026.*
 
-## Setup for POSIX/Windows
+## Setup for POSIX/Windows Testing Script
+
+**This is not the main script for deployment on the Raspberry Pi.**  
+**This is only meant for demo purposes on POSIX/Windows machines.**
 
 *Ensure that you have Python version 3.10.0 or later installed on your system.*
+
+```
+python --version
+```
 
 **NOTE:** *Since this project uses the pynput package for monitoring keyboard events, this script will not work on Linux DEs using the Wayland Protocol and requires sudo permissions to work on MacOS.*
 
@@ -21,13 +28,22 @@ This project is still in progress, so check back every once in a while for updat
 git clone https://github.com/seaflop/assistive-reader
 ```
 
-**2. Navigate to the `capstone` directory.**
+**2. Navigate to the `assistive-reader` directory.**
 
 ```
 cd assistive-reader
 ```
 
 **3. Activate a Python virtual environment.**
+
+POSIX:
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Windows:
 
 ```
 python -m venv .venv
@@ -64,7 +80,7 @@ python .\src\main.py -i "pathtoyourimagehere.jpg"
 python .\src\main.py -w
 ```
 
-The script will prompt you for input when it is ready to run. This may take some time, especially on the first run, as all the models will have to be downloaded first.
+The script will prompt you for input when it is ready. This may take some time, especially on the first run, as all the models will have to be downloaded first.
 
 Press Space to start the script.  
 If you specified `-w`, press Space to take a picture, or Esc to exit.  
